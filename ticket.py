@@ -11,6 +11,15 @@ class Ticket(object):
     def __init__(self, ticket_num):
         self.__ticket_num = ticket_num
 
+    @property
+    def ticket_num(self):
+        return self.__ticket_num
+
+    @staticmethod
+    def get_n_validate():
+        ticket_num = input()
+        return len(ticket_num) == 6 and ticket_num.isdigit()
+
     def __is_happy_moskow(self):
         '''
         Calculate is this ticket happy by Moscow algorithm
@@ -49,5 +58,3 @@ class Ticket(object):
             return self.__is_happy_moskow()
         elif mark == "Piterburg":
             return self.__is_happy_piter()
-        else:
-            return None

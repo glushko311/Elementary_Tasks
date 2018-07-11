@@ -168,6 +168,7 @@ class TicketHandler(object):
     def print_counting_result(self):
         print("Number of happy tickets by {0} method is equal - {1}".format(self.__algorithm, self.__count))
 
+#not testing
     def tickets_input(self):
         def tickets_input():
             '''
@@ -255,3 +256,20 @@ class TicketHandler(object):
     @property
     def couter(self):
         return self.__count
+
+    @staticmethod
+    def start():
+        '''
+        Start application function
+        :return:
+        '''
+        handler = TicketHandler()
+        if handler.input_mark() == "quit":
+            quit()
+        if handler.tickets_input() == "quit":
+            quit()
+        handler.print_counting_result()
+
+
+if __name__ == "__main__":
+    TicketHandler.start()
