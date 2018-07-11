@@ -3,9 +3,9 @@ Python Elementary tasks from Soft Serve course
 use Python version 3.6 or higher
 
 
-=============================================================
+
                     UNITTESTS
-=============================================================
+
 to start all unittests use:
 python -m  unittest tests/test_start.py
 
@@ -19,22 +19,20 @@ python -m  unittest tests/triangular_tests.py
 python -m  unittest tests/ticket_handler_tests.py
 
 
-=============================================================
+
                     APPLICATIONS START
-=============================================================
+
 
 CHESS_BOARD - there is a console application.
 It can draw chess board n x m with symbols " " and "*"
 
 for start use:
-cd %path_to_repository%/Elementary_Tasks
 python chess_board.py 9 8
 -------------------------------------------------------------
 ENVELOPE - there is a console application.
 It is check can envelope 1 contain envelope 2 or opposite.
 
 for start use:
-cd %path_to_repository%/Elementary_Tasks
 python envelope.py
 -------------------------------------------------------------
 TRIANGULAR - there is console application.
@@ -42,7 +40,6 @@ It can get data from user convert them into triangle objects
 put them into list, sort list an print
 
 for start use:
-cd %path_to_repository%/Elementary_Tasks
 python triangular.py
 -------------------------------------------------------------
 FILE HANDLER - there is console application.
@@ -50,8 +47,6 @@ Count how many substrings in txt file or
 replace one substring to another
 
 for start use:
-cd %path_to_repository%/Elementary_Tasks
-
 python file_handler.py test/test.txt kad
 python file_handler.py test/test.txt kad mab
 -------------------------------------------------------------
@@ -61,7 +56,6 @@ Need to use parameter - a number.
 Max number it can process (10**102)-1
 
 for start use:
-cd %path_to_repository%/Elementary_Tasks
 python number_translator.py 3232002
 -------------------------------------------------------------
 TICKET_HANDLER - There is console application.
@@ -74,14 +68,12 @@ max and min value of ticket and tickets will be generated
 for test use file data/tickets.txt
 
 for start use:
-cd %path_to_repository%/Elementary_Tasks
 python ticket_handler.py
 -------------------------------------------------------------
 SQUARE_SEQUENCE - There is console application.
 Display sequence from 1 to number if number**2 less then parameter
 
 for start use:
-cd %path_to_repository%/Elementary_Tasks
 python square_sequence.py 54
 -------------------------------------------------------------
 FIBONACHI - There is console application.
@@ -90,5 +82,4 @@ It calculate fibonachi numbers between min and max
 and print they.
 
 for start use:
-cd %path_to_repository%/Elementary_Tasks
 python fibonachi.py 134 555
