@@ -16,8 +16,7 @@ class Ticket(object):
         return self.__ticket_num
 
     @staticmethod
-    def get_n_validate():
-        ticket_num = input()
+    def validate(ticket_num):
         return len(ticket_num) == 6 and ticket_num.isdigit()
 
     def __is_happy_moskow(self):
@@ -58,3 +57,6 @@ class Ticket(object):
             return self.__is_happy_moskow()
         elif mark == "Piterburg":
             return self.__is_happy_piter()
+
+    def __eq__(self, other):
+        return self.ticket_num == other.ticket_num

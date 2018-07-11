@@ -47,17 +47,19 @@ class TicketHandler(object):
                 continue
             with open(path, 'r') as f:
                 text = f.read()
-            if text.find('Moskow') != -1 and text.find('Piter') != -1:
+            if text.find('Moscow') != -1 and text.find('Piter') != -1:
                 print("It seems we have two keys in single file:\n"
                       "You need input path to file with only one key")
                 continue
-            elif text.find('Moskow') == -1 and text.find('Piter') == -1:
+            elif text.find('Moscow') == -1 and text.find('Piter') == -1:
                 print("It seems it is no any key in your file:\n"
-                      "you need key \"Piter\" or \"Moskow\"")
+                      "you need key \"Piter\" or \"Moscow\"")
                 continue
             flag = False
+            self.set_algorithm(text)
 
-        if text.find("Moskow") != -1:
+    def set_algorithm(self, text):
+        if text.find("Moscow") != -1:
             self.__algorithm = __class__.MOSCOW_ALGORITHM_MARK
         elif text.find("Piter") != -1:
             self.__algorithm = __class__.PITER_ALGORITHM_MARK
@@ -102,7 +104,7 @@ class TicketHandler(object):
         while flag:
             print("Input ticket number - 6 digits:")
             ticket_num = input()
-            if len(ticket_num) != 6 or not ticket_num.isdigit():
+            if not Ticket.validate(ticket_num):
                 print("Invalid input, try again")
                 continue
             else:
@@ -121,29 +123,24 @@ class TicketHandler(object):
         while flag:
             print("Input minimum ticket number between 000000 .. 999999:")
             minimum_num = input()
-            if not minimum_num.isdigit():
-                print("Inputted value of minimum not a number")
-                continue
-            elif 999999 <= int(minimum_num) <= 0:
+            if not Ticket.validate(minimum_num):
                 print("Value of minimum number not correct")
                 continue
-            minimum_num = int(minimum_num)
-
             print("Input maximum ticket number between 000000 .. 999999:")
             maximum_num = input()
-            if not maximum_num.isdigit():
-                print("Inputted value of maximum not a number")
+            if not Ticket.validate(maximum_num):
+                print("Value of maximum number not correct")
                 continue
-            elif 999999 <= int(maximum_num) <= 0:
-                print("Value of minimum number not correct")
-                continue
+            minimum_num = int(minimum_num)
             maximum_num = int(maximum_num)
             if minimum_num > maximum_num:
                 print("It seem minimum number larger then maximum number")
                 continue
             flag = False
+        self. generate_tickets_by_input_numbers(minimum_num,  maximum_num)
 
-        for item in range(minimum_num, maximum_num):
+    def generate_tickets_by_input_numbers(self, minimum_num: int, maximum_num: int):
+        for item in range(minimum_num, maximum_num+1):
             str_item = str(item)
             if len(str_item) < 6:
                 str_item = '0' * (6 - len(str_item)) + str_item
@@ -168,7 +165,6 @@ class TicketHandler(object):
     def print_counting_result(self):
         print("Number of happy tickets by {0} method is equal - {1}".format(self.__algorithm, self.__count))
 
-#not testing
     def tickets_input(self):
         def tickets_input():
             '''
@@ -254,8 +250,12 @@ class TicketHandler(object):
         return self.__tickets
 
     @property
-    def couter(self):
+    def count(self):
         return self.__count
+
+    @property
+    def algorithm(self):
+        return self.__algorithm
 
     @staticmethod
     def start():

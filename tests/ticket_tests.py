@@ -1,25 +1,18 @@
 import unittest
-import os
-from unittest import mock
 
-from file_handler import FileHandler
 from ticket import Ticket
 
-
 class TicketTestSuit(unittest.TestCase):
-    @mock.patch('builtins.input', side_effect=['123325'])
-    def test_get_n_validate_valid(self, input):
-        res = Ticket.get_n_validate()
+    def test_validate_valid(self):
+        res = Ticket.validate('123325')
         self.assertEqual(res, True)
 
-    @mock.patch('builtins.input', side_effect=['aaabbb'])
-    def test_get_n_validate_str(self, input):
-        res = Ticket.get_n_validate()
+    def test_validate_str(self):
+        res = Ticket.validate('aaabbb')
         self.assertEqual(res, False)
 
-    @mock.patch('builtins.input', side_effect=['123456789'])
-    def test_get_n_validate_too_long(self, input):
-        res = Ticket.get_n_validate()
+    def test_validate_too_long(self):
+        res = Ticket.validate('123456789')
         self.assertEqual(res, False)
 
     def test_is_happy_mosk_true(self):
