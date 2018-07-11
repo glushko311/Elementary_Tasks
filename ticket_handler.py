@@ -59,6 +59,11 @@ class TicketHandler(object):
             self.set_algorithm(text)
 
     def set_algorithm(self, text):
+        '''
+        Find algorithm mark in text and set it into self.__algorithm
+        :param text:
+        :return:
+        '''
         if text.find("Moscow") != -1:
             self.__algorithm = __class__.MOSCOW_ALGORITHM_MARK
         elif text.find("Piter") != -1:
@@ -70,7 +75,8 @@ class TicketHandler(object):
         tickets from file and save they into self.__tickets
         :return: None
         '''
-        while 1:
+        is_continue = True
+        while is_continue:
             print("Input \"q\" for exit")
             ticket_path = input("Input path to file with tickets - ")
             if ticket_path.lower() == "q":
@@ -92,7 +98,7 @@ class TicketHandler(object):
                 except ValueError:
                     print("Invalid file format")
                     continue
-            break
+            is_continue = False
 
     def tickets_manual(self):
         '''
@@ -140,6 +146,13 @@ class TicketHandler(object):
         self. generate_tickets_by_input_numbers(minimum_num,  maximum_num)
 
     def generate_tickets_by_input_numbers(self, minimum_num: int, maximum_num: int):
+        '''
+        Generate list of tickets between minimum_num and maximum_num
+        Put list into self.__tickets
+        :param minimum_num:
+        :param maximum_num:
+        :return:
+        '''
         for item in range(minimum_num, maximum_num+1):
             str_item = str(item)
             if len(str_item) < 6:
