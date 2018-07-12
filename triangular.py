@@ -1,3 +1,5 @@
+import re
+
 from exceptions.triangular_exception import TriangularException
 class Triangular:
     '''
@@ -14,25 +16,52 @@ class Triangular:
     '''
 
     @staticmethod
-    def get_n_validate():
+    def validate_triangular_data(input_data:str):
         '''
-        get data from user and if they valid return Triangular object
+        get data and validate
         :return: Triangular
         '''
-        input_data = input().split(',')
-        name = (input_data[0]).strip()
-        if not len(name):
-            raise TriangularException('Blank name not available!')
-        side_a = float(input_data[1])
-        side_b = float(input_data[2])
-        side_c = float(input_data[3])
-        p = 0.0
+        if not re.match(r'\w+\s*,\s*\d*\s*,\s*\d*\s*,\s*\d*', input_data):
+            return False, "Not valid input format should be - name,side_a,side_b,side_c"
+        else:
+            return True, "OK"
+
+    @staticmethod
+    def create_triangular(input_data:str):
+        data_list = input_data.split(',')
+        print(data_list)
+        name = data_list[0].strip()
+        side_a = float(data_list[1].strip())
+        side_b = float(data_list[2].strip())
+        side_c = float(data_list[3].strip())
         p = (side_a + side_b + side_c)/2
         if (p-side_a) * (p-side_b) * (p-side_c) <= 0:
             raise TriangularException('It is impossible to create this triangle '
                              'one of sides too long')
         square = (p * (p-side_a) * (p-side_b) * (p-side_c)) ** 0.5
         return Triangular(side_a, side_b, side_c, square, name)
+    #
+    # @staticmethod
+    # def validate_triangular_data(input_data:str):
+    #     '''
+    #     get data and validate
+    #     :return: Triangular
+    #     '''
+    #     input_data = input_data.split(',')
+    #     name = (input_data[0]).strip()
+    #     if not len(name):
+    #         raise TriangularException('Blank name not available!')
+    #     side_a = float(input_data[1])
+    #     side_b = float(input_data[2])
+    #     side_c = float(input_data[3])
+    #     p = 0.0
+    #     p = (side_a + side_b + side_c)/2
+    #     if (p-side_a) * (p-side_b) * (p-side_c) <= 0:
+    #         raise TriangularException('It is impossible to create this triangle '
+    #                          'one of sides too long')
+    #     square = (p * (p-side_a) * (p-side_b) * (p-side_c)) ** 0.5
+    #     return Triangular(side_a, side_b, side_c, square, name)
+
 
     @staticmethod
     def sort_triangular_list(triangle_list: list):
@@ -82,6 +111,15 @@ class Triangular:
         else:
             return False
 
+
+def do_continue():
+    want_continue = (input("Хотите ли вы продолжить \'y\' или \'Yes\'")).upper()
+    if not (want_continue in ('Y', 'YES')):
+        return True
+    else:
+        return False
+
+
 def start():
     '''
     Start application function
@@ -95,21 +133,19 @@ def start():
     while is_continue_flag:
         input_triang_flag = True
         while input_triang_flag:
+            print("Input triangle data. Input format - \"name,side_a,side_b,side_c\".")
+            input_data = input()
+            validate_res = Triangular.validate_triangular_data(input_data)
+            if not validate_res[0]:
+                input_triang_flag = do_continue()
+                continue
             try:
-                print("Input triangle data. Input format - \"name,side_a,side_b,side_c\".")
-                triangular_list.append(Triangular.get_n_validate())
-            except ValueError:
-                print("Not valid data input format. Try again.")
-                continue
-            except IndexError:
-                print("Not valid data input format. Try again.")
-                continue
+                triangular_list.append(Triangular.create_triangular(input_data))
             except TriangularException as e:
                 print(str(e))
             input_triang_flag = False
-        want_continue = (input("Хотите ли вы продолжить \'y\' или \'Yes\'")).upper()
-        if not (want_continue == 'Y' or want_continue == 'YES'):
-            is_continue_flag = False
+
+        is_continue_flag = do_continue()
 
     triangular_list = Triangular.sort_triangular_list(triangular_list)
 
