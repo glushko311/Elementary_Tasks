@@ -8,6 +8,7 @@ from tests.fibonachi_tests import FibonachiTestList
 from tests.sequence_tests import SequenceTestSuit
 from tests.ticket_tests import TicketTestSuit
 from tests.ticket_handler_tests import TicketHandlerTestSuit
+from tests.number_translator_tests import NumberTranslatorTestSuit
 
 
 if __name__ == '__main__':
