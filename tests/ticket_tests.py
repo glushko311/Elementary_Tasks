@@ -47,7 +47,5 @@ class TicketTestSuit(unittest.TestCase):
         self.assertEqual(ticket.is_happy(mark), False)
 
 
-
-
 if __name__ == '__main__':
         unittest.main()

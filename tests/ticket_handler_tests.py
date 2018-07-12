@@ -58,3 +58,7 @@ class TicketHandlerTestSuit(unittest.TestCase):
         handler.set_algorithm('Moscow')
         handler.count_happy_tickets(True)
         self.assertEqual(handler.count, 55252)
+
+
+if __name__ == '__main__':
+        unittest.main()

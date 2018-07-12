@@ -1,7 +1,7 @@
 from optparse import OptionParser
 
 from chess_board_exception import ChessBoardException
-from validator import Validator
+
 
 class ChessBoard:
     '''
@@ -127,7 +127,6 @@ def start():
         quit()
 
     board.print_board()
-
 
 if __name__ == "__main__":
     start()

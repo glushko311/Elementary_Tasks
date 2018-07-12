@@ -83,3 +83,6 @@ class NumberTranslatorTestSuit(unittest.TestCase):
         self.assertEqual(actual_res, expected_res)
 
 
+if __name__ == '__main__':
+        unittest.main()
+

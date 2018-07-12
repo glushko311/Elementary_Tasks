@@ -1,5 +1,7 @@
 from math import sin, cos, pi
 
+from exceptions.envelope_error import EnvelopeError
+
 
 class Envelope:
     '''
@@ -18,7 +20,7 @@ class Envelope:
     '''
 
     @staticmethod
-    def is_into(env1, env2):
+    def can_put_one_to_another_or_opposite(env1, env2):
         '''
         Calculate can you put one envelope to another
         :param env1:
@@ -43,21 +45,16 @@ class Envelope:
         return env2, env1, is_in_flag
 
     @staticmethod
-    def get_n_validate():
-        '''
-        get data from user validate and transmit them
+    def validate_side(side: str):
+        """
+        validate data return tuple with True False and message
         :return:Envelope
-        '''
-        a_side = input("Input envelope height - ")
-        a_side = float(a_side)
-        if a_side <= 0:
-            raise ValueError
-        b_side = input("Input envelope length - ")
-        b_side = float(b_side)
-        if b_side <= 0:
-            raise ValueError
-
-        return Envelope(a_side, b_side)
+        """
+        if not side.isdigit():
+            return False, "Input value is not number"
+        if float(side) <= 0:
+            return False, "Input value is null or negative"
+        return True, "Validation successfully"
 
     def __init__(self, a_side: float, b_side: float):
         self.__max_side = max(a_side, b_side)
@@ -86,30 +83,55 @@ class Envelope:
             return False
 
 
-def input_envelope(name):
-    while 1:
-        try:
-            env = Envelope.get_n_validate()
-            return env
-        except ValueError:
-            print("Invalid data input for {0} envelope. Sides should be positive numbers".format(name))
+def input_envelope():
+    flag = True
+    while flag:
+        print("Please input the first side")
+        print("To stop input and quit press q or Q")
+        a_side = input()
+        flag = not a_side.lower() == "q"
+        if not flag:
             continue
+        validation_res = Envelope.validate_side(a_side)
+        if not validation_res[0]:
+            print(validation_res[1])
+            continue
+        print("Please input the second side")
+        b_side = input()
+        flag = not b_side.lower().lower() == "q"
+        if not flag:
+            continue
+        validation_res = Envelope.validate_side(b_side)
+        if not validation_res[0]:
+            print(validation_res[1])
+            continue
+        return Envelope(float(a_side), float(b_side))
+    raise EnvelopeError("User exit")
 
 
 def start():
     flag = True
     while flag:
-        env1 = input_envelope("first")
-        env2 = input_envelope("second")
-
-        res = Envelope.is_into(env1, env2)
+        try:
+            print("Please input first envelope sides")
+            env1 = input_envelope()
+        except EnvelopeError as e:
+            print(e)
+            quit()
+        try:
+            print("Please input second envelope sides")
+            env2 = input_envelope()
+        except EnvelopeError as e:
+            print(e)
+            quit()
+        res = Envelope.can_put_one_to_another_or_opposite(env1, env2)
         if res[2]:
             print("You can put {0} into {1}".format(res[0], res[1]))
         else:
             print("You can't put envelopes one to another")
 
-        want_continue = (input("Would you like to continue? \'y\', \'Yes\' / \'n\', \'No\'")).upper()
-        if not (want_continue == 'Y' or want_continue == 'YES'):
+        want_continue = (input("Would you like to continue? \'y\', \'Yes\'")).upper()
+        if not (want_continue.lower() in ('y', 'yes')):
             flag = False
 
 
