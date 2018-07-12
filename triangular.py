@@ -1,4 +1,4 @@
-from triangular_exception import TriangularException
+from exceptions.triangular_exception import TriangularException
 class Triangular:
     '''
     Contain triangular parameters and methods

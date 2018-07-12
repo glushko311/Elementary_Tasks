@@ -3,7 +3,7 @@ import unittest
 from unittest import mock
 
 from triangular import Triangular
-from triangular_exception import TriangularException
+from exceptions.triangular_exception import TriangularException
 
 
 class TriangularTestSuit(unittest.TestCase):

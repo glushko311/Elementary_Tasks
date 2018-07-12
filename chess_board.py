@@ -1,6 +1,6 @@
 from optparse import OptionParser
 
-from chess_board_exception import ChessBoardException
+from exceptions.chess_board_exception import ChessBoardException
 
 
 class ChessBoard:

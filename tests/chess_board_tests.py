@@ -1,7 +1,7 @@
 import unittest
 
 from chess_board import ChessBoard
-from chess_board_exception import ChessBoardException
+from exceptions.chess_board_exception import ChessBoardException
 
 
 class ChessBoardTestSuit(unittest.TestCase):

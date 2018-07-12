@@ -1,6 +1,7 @@
 from math import sin, cos, pi
 
 from exceptions.envelope_error import EnvelopeError
+from validator import Validator
 
 
 class Envelope:
@@ -44,18 +45,6 @@ class Envelope:
                 phi += accuracy
         return env2, env1, is_in_flag
 
-    @staticmethod
-    def validate_side(side: str):
-        """
-        validate data return tuple with True False and message
-        :return:Envelope
-        """
-        if not side.isdigit():
-            return False, "Input value is not number"
-        if float(side) <= 0:
-            return False, "Input value is null or negative"
-        return True, "Validation successfully"
-
     def __init__(self, a_side: float, b_side: float):
         self.__max_side = max(a_side, b_side)
         self.__min_side = min(a_side, b_side)
@@ -92,7 +81,7 @@ def input_envelope():
         flag = not a_side.lower() == "q"
         if not flag:
             continue
-        validation_res = Envelope.validate_side(a_side)
+        validation_res = Validator.validate_positive_not_null(a_side)
         if not validation_res[0]:
             print(validation_res[1])
             continue
@@ -101,7 +90,7 @@ def input_envelope():
         flag = not b_side.lower().lower() == "q"
         if not flag:
             continue
-        validation_res = Envelope.validate_side(b_side)
+        validation_res = Validator.validate_positive_not_null(b_side)
         if not validation_res[0]:
             print(validation_res[1])
             continue
