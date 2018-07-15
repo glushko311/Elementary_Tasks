@@ -1,10 +1,11 @@
 from optparse import OptionParser
 
 from exceptions.chess_board_exception import ChessBoardException
+from validator import Validator
 
 
 class ChessBoard:
-    '''
+    """
     Class ChessBoard
         Object of class contain data of a chess board and have methods to display it
         Parameters:
@@ -17,52 +18,36 @@ class ChessBoard:
              __init__(height, length)
              print_board()
              show_instructions()
-    '''
-    '''
-    Validate single value - return true or Exception
-    '''
-    @staticmethod
-    def validate_value(value, name=""):
-        if value is None:
-            raise ChessBoardException('{0} value  not exists'.format(name))
-        if not value.isdigit():
-            raise ChessBoardException('{0} value not a number'.format(name))
-        value = int(value)
-        if value <= 0:
-            raise ChessBoardException('{0} value should be more than null'.format(name))
-        return True
+    """
 
-    '''
-    Validate list of arguments - return ChessBoard object or Exception
-    '''
     @staticmethod
-    def get_n_validate(args):
+    def create_chessboard(args):
+        """
+        Send list of arguments to validator if ok - create ChessBoard object else ChessBoardException
+        """
         if len(args) != 2:
             raise ChessBoardException('Should be started with two parameters')
         length = args[0]
         height = args[1]
+        validation_res = Validator.validate_two_int_not_null(length, height)
+        if validation_res[0]:
+            return ChessBoard(int(length), int(height))
+        else:
+            raise ChessBoardException(validation_res[1])
 
-        ChessBoard.validate_value(length, 'Length')
-        ChessBoard.validate_value(height, 'Height')
-
-        return ChessBoard(int(length), int(height))
-
-    '''
-        Method used to display instructions to input parameters
-    '''
     @staticmethod
     def show_instructions():
-        '''
-        Display text documentation how to use application
-        :return None:
-        '''
+        """
+            Display text documentation how to use application
+            :return None:
+        """
         print(
-            '''
-            Please start application with two parameters,
-            parameters should be positive numbers
-            for example:
-            $ python main.py 5 6
-            '''
+            """
+                Please start application with two parameters,
+                parameters should be positive numbers
+                for example:
+                $ python chess_board.py 5 6
+            """
         )
 
     def __init__(self, height, length):
@@ -81,11 +66,10 @@ class ChessBoard:
         else:
             self.__board_odd_row = self.__board_even_row[::-1]
 
-
-    '''
-        Method used to display chess board with symbols " " and "*"
-    '''
     def print_board(self):
+        """
+            Method used to display chess board with symbols " " and "*"
+        """
         board = []
         for i in range(self.__height):
             if i % 2:
@@ -116,17 +100,20 @@ class ChessBoard:
 
 
 def start():
+    """
+        Start application function
+    :return:
+    """
     parser = OptionParser()
     args = parser.parse_args()
 
     try:
-        board = ChessBoard.get_n_validate(args[1])
+        board = ChessBoard.create_chessboard(args[1])
+        board.print_board()
     except ChessBoardException as e:
         print(e)
         ChessBoard.show_instructions()
-        quit()
 
-    board.print_board()
 
 if __name__ == "__main__":
     start()

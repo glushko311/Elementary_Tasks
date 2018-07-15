@@ -10,7 +10,7 @@ class Validator:
         """
         if not str_num.isdigit():
             return False, "Input value is not number"
-        if float(str_num) <= 0:
+        if int(str_num) <= 0:
             return False, "Input value is null or negative"
         return True, "Validation successfully"
 
@@ -37,6 +37,19 @@ class Validator:
         msg += "Input value should be positive not null number."
         return False, msg
 
+    @staticmethod
+    def validate_two_int_not_null(str_num1: str, str_num2: str):
+        res1 = Validator.validate_positive_not_null(str_num1)
+        res2 = Validator.validate_positive_not_null(str_num2)
+        if res1[0] and res2[0]:
+            return True, "Validation successfully"
+        msg = ""
+        if not res1[0]:
+            msg += "First input value not valid.\n"
+        if not  res2[0]:
+            msg += "Second input value not valid.\n"
+        msg += "Input value should be positive not null number."
+        return False, msg
 
     @staticmethod
     def validate_triangular(input_data: str):

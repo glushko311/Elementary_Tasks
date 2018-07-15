@@ -32,28 +32,28 @@ class ChessBoardTestSuit(unittest.TestCase):
 
     # for get_n_validate method
     def test_get_n_validate_valid(self):
-        res = ChessBoard.get_n_validate(('4', '4'))
+        res = ChessBoard.create_chessboard(('4', '4'))
         self.assertEqual(res, ChessBoard(4, 4))
 
     def test_get_n_validate_one(self):
         with self.assertRaises(ChessBoardException):
-            ChessBoard.get_n_validate(['4'])
+            ChessBoard.create_chessboard(['4'])
 
     def test_get_n_validate_str(self):
         with self.assertRaises(ChessBoardException):
-            ChessBoard.get_n_validate(['a', '4'])
+            ChessBoard.create_chessboard(['a', '4'])
 
     def test_get_n_validate_null(self):
         with self.assertRaises(ChessBoardException):
-            ChessBoard.get_n_validate(['0', '0'])
+            ChessBoard.create_chessboard(['0', '0'])
 
     def test_get_n_validate_negative(self):
         with self.assertRaises(ChessBoardException):
-            ChessBoard.get_n_validate(['4', '-4'])
+            ChessBoard.create_chessboard(['4', '-4'])
 
     def test_get_n_validate_float(self):
         with self.assertRaises(ChessBoardException):
-            ChessBoard.get_n_validate(['4.5', '4.3'])
+            ChessBoard.create_chessboard(['4.5', '4.3'])
 
 if __name__ == '__main__':
         unittest.main()
