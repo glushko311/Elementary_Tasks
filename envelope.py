@@ -1,6 +1,6 @@
 from math import sin, cos, pi
 
-from exceptions.envelope_error import EnvelopeError
+from exceptions.user_exit_error import UserExitError
 from validator import Validator
 
 
@@ -72,30 +72,36 @@ class Envelope:
             return False
 
 
+def do_continue():
+    """
+    Get user input and check is it y or YES return True/False
+    :return: Bool
+    """
+    want_continue = (input("Would you like to continue \'y\' or \'Yes\'")).upper()
+    if want_continue in ('Y', 'YES'):
+        return True
+    else:
+        return False
+
+
 def input_envelope():
+    """
+    Input data for create one envelope send data into validator
+    :return: Envelope|raise EnvelopeException
+    """
     flag = True
     while flag:
         print("Please input the first side")
-        print("To stop input and quit press q or Q")
         a_side = input()
-        flag = not a_side.lower() == "q"
-        if not flag:
-            continue
-        validation_res = Validator.validate_positive_not_null(a_side)
-        if not validation_res[0]:
-            print(validation_res[1])
-            continue
         print("Please input the second side")
         b_side = input()
-        flag = not b_side.lower().lower() == "q"
-        if not flag:
-            continue
-        validation_res = Validator.validate_positive_not_null(b_side)
-        if not validation_res[0]:
-            print(validation_res[1])
-            continue
-        return Envelope(float(a_side), float(b_side))
-    raise EnvelopeError("User exit")
+        validation_res = Validator.validate_two_float_not_null(a_side, b_side)
+        if validation_res[0]:
+            return Envelope(float(a_side), float(b_side))
+        print(validation_res[1])
+        flag = do_continue()
+
+    raise UserExitError("User exit")
 
 
 def start():
@@ -104,24 +110,19 @@ def start():
         try:
             print("Please input first envelope sides")
             env1 = input_envelope()
-        except EnvelopeError as e:
-            print(e)
-            quit()
-        try:
             print("Please input second envelope sides")
             env2 = input_envelope()
-        except EnvelopeError as e:
+        except UserExitError as e:
             print(e)
-            quit()
+            flag = do_continue()
+            continue
+        print(env1, ' \n', env2)
         res = Envelope.can_put_one_to_another_or_opposite(env1, env2)
         if res[2]:
             print("You can put {0} into {1}".format(res[0], res[1]))
         else:
             print("You can't put envelopes one to another")
-
-        want_continue = (input("Would you like to continue? \'y\', \'Yes\'")).upper()
-        if not (want_continue.lower() in ('y', 'yes')):
-            flag = False
+        flag = do_continue()
 
 
 if __name__ == "__main__":
