@@ -1,7 +1,68 @@
 import re
 
+
 class Validator:
 
+    @staticmethod
+    def validate_is_not_null(value):
+        if float(value) == 0:
+            return False, "Value is null.\n"
+        else:
+            return True, "Validation successfully.\n"
+
+    @staticmethod
+    def validate_is_not_negative(value):
+        if float(value) < 0:
+            return False, "Value is negative.\n"
+        else:
+            return True, "Validation successfully.\n"
+
+    @staticmethod
+    def validate_is_int(value):
+        if not value.isdigit():
+            return False, "Value is not an integer number.\n"
+        else:
+            return True, "Validation successfully.\n"
+
+    @staticmethod
+    def validate_is_float(value):
+        if not re.match(r'^\s*[-+]?\d*\.?\d*\s*$', value):
+            return False, "Value is not a float number.\n"
+        else:
+            return True, "Validation successfully.\n"
+
+    @staticmethod
+    def validate_is_triangular_input(value):
+        if not re.match(r'^\w+\s*,\s*\d*\.?\d*\s*,\s*\d*\.?\d*\s*,\s*\d*\.?\d*$', value):
+            return False, "Incorrect triangular input data (should be \"name,side_a,side_b,side_c\")"
+        else:
+            return True, "Validation successfully.\n"
+
+    SHORT_CODES = {
+        "not_null": "validate_is_not_null",
+        "not_neg": "validate_is_not_negative",
+        "is_int": "validate_is_int",
+        "is_float": "validate_is_float",
+        "is_triang": "validate_is_triangular_input"
+    }
+
+    @staticmethod
+    def single_validate(validate_pack: dict):
+        """
+        Validate one value validate_pack['value'] by rules from validate_pack['rules']
+        validation_pack it is tuple with value and tuple of validation rules
+        """
+        for short_code in validate_pack['rules']:
+            func = getattr(Validator, Validator.SHORT_CODES[short_code])
+            valid_res = func(validate_pack['value'])
+            if not valid_res[0]:
+                return False, valid_res[1]
+
+        return True, "Validation successfully"
+
+
+
+# deprecated methods need to refactor!
     @staticmethod
     def validate_positive_not_null(str_num: str):
         """
@@ -9,17 +70,29 @@ class Validator:
         :return: bool, msg: str
         """
         if not str_num.isdigit():
-            return False, "Input value is not number"
+            return False, "Value is not a number"
         if int(str_num) <= 0:
-            return False, "Input value is null or negative"
+            return False, "Value is null or negative"
+        return True, "Validation successfully"
+
+    @staticmethod
+    def validate_int_null(str_num: str):
+        """
+        validate data return tuple with True False and message
+        :return: bool, msg: str
+        """
+        if not str_num.isdigit():
+            return False, "Value is not a number"
+        if int(str_num) < 0:
+            return False, "Value is negative"
         return True, "Validation successfully"
 
     @staticmethod
     def validate_float_not_null(str_num: str):
         if not re.match(r'\s*\d*\.?\d*\s*', str_num):
-            return False, "Input value is not number"
+            return False, "Value is not number"
         if float(str_num) <= 0:
-            return False, "Input value is null or negative"
+            return False, "Value is null or negative"
         else:
             return True, "Validation successfully"
 
@@ -31,10 +104,10 @@ class Validator:
             return True, "Validation successfully"
         msg = ""
         if not res1[0]:
-            msg += "First input value not valid.\n"
+            msg += "First value not valid.\n"
         if not  res2[0]:
-            msg += "Second input value not valid.\n"
-        msg += "Input value should be positive not null number."
+            msg += "Second value not valid.\n"
+        msg += "Value should be positive not null number."
         return False, msg
 
     @staticmethod
@@ -45,10 +118,24 @@ class Validator:
             return True, "Validation successfully"
         msg = ""
         if not res1[0]:
-            msg += "First input value not valid.\n"
-        if not  res2[0]:
-            msg += "Second input value not valid.\n"
-        msg += "Input value should be positive not null number."
+            msg += "First value not valid.\n"
+        if not res2[0]:
+            msg += "Second  value not valid.\n"
+        msg += "Value should be positive not null number."
+        return False, msg
+
+    @staticmethod
+    def validate_two_int_null(str_num1: str, str_num2: str):
+        res1 = Validator.validate_positive_not_null(str_num1)
+        res2 = Validator.validate_positive_not_null(str_num2)
+        if res1[0] and res2[0]:
+            return True, "Validation successfully"
+        msg = ""
+        if not res1[0]:
+            msg += "First value not valid.\n"
+        if not res2[0]:
+            msg += "Second value not valid.\n"
+        msg += "Value should be positive not null number."
         return False, msg
 
     @staticmethod
@@ -76,7 +163,11 @@ class Validator:
         if (p - side_a) * (p - side_b) * (p - side_c) <= 0:
             raise TriangularException('It is impossible to create this triangle '
                                       'one of sides too long')
-
         square = (p * (p - side_a) * (p - side_b) * (p - side_c)) ** 0.5
         return Triangular(side_a, side_b, side_c, square, name)
+
+    @staticmethod
+    def validate_min_max_values_tuple(min_max_tuple):
+        if len(min_max_tuple) != 2:
+            return False, "Application need two parameters."
 
