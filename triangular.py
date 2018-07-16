@@ -1,5 +1,6 @@
-from validator import Validator
-from exceptions.triangular_exception import TriangularException
+
+from task_validator import TaskValidator
+# from exceptions.triangular_exception import TriangularException
 
 
 class Triangular:
@@ -13,6 +14,16 @@ class Triangular:
           sort_triangular_list(triangular_list) - Sort triangular
                             list by square field and return sorted
     """
+    @staticmethod
+    def triangular_create(triang_str:str):
+        triang_list = triang_str.split(',')
+        name = triang_list[0].strip()
+        side_a = float(triang_list[1].strip())
+        side_b = float(triang_list[2].strip())
+        side_c = float(triang_list[3].strip())
+        p = (side_a + side_b + side_c) / 2
+        square = (p * (p - side_a) * (p - side_b) * (p - side_c)) ** 0.5
+        return Triangular(side_a, side_b, side_c, square, name)
 
     @staticmethod
     def sort_triangular_list(triangle_list: list):
@@ -83,15 +94,18 @@ def start():
     print triangulars
     :return: None
     """
+
     triangular_list = []
     input_triang_flag = True
     while input_triang_flag:
         print("Input triangle data. Input format - \"name,side_a,side_b,side_c\".")
-        try:
-            triangular_list.append(Validator.validate_triangular(input()))
+        input_data = input()
+        validate_res = TaskValidator.validate_triangular(input_data)
+        if validate_res[0]:
+            triangular_list.append(Triangular.triangular_create(input_data))
             input_triang_flag = do_continue()
-        except TriangularException as e:
-            print(e)
+        else:
+            print(validate_res[1])
             input_triang_flag = do_continue()
 
     triangular_list = Triangular.sort_triangular_list(triangular_list)

@@ -4,7 +4,7 @@ from validator import Validator
 class TaskValidator:
 
     @staticmethod
-    def validate_chess_board_tuple(data_tuple):
+    def validate_chess_board_tuple(data_tuple: tuple):
         """
         Validate tuple of parameters use Validator methods
         :param data_tuple: (min_value, max_value)
@@ -29,7 +29,7 @@ class TaskValidator:
                 return True, "Validation successful"
 
     @staticmethod
-    def validate_envelope_sides(a_side, b_side):
+    def validate_envelope_sides(a_side: str, b_side: str):
         validation_a = Validator.single_validate({"value": a_side, "rules": (
             "is_float", "not_null", "not_neg"
         )})
@@ -44,7 +44,29 @@ class TaskValidator:
             return True, "Validation successful"
 
     @staticmethod
-    def validate_fibonachi_tuple(data_tuple):
+    def validate_triangular(triang_str: str):
+        triang_list = triang_str.split(',')
+        if len(triang_list) != 4:
+            return False, "Invalid value, value format should be \"name,side_a,side_b,side_c\"."
+        if triang_list == "":
+            return False, "Name shouldn't be blank."
+        for side in triang_list[1:]:
+            validate_res = Validator.single_validate({"value": side, "rules": (
+                    "is_float", "not_null", "not_neg"
+            )})
+            if not validate_res[0]:
+                return False, "Side validation error.\n" + validate_res[1]
+        side_a = float(triang_list[1].strip())
+        side_b = float(triang_list[2].strip())
+        side_c = float(triang_list[3].strip())
+        p = (side_a + side_b + side_c) / 2
+        if (p - side_a) * (p - side_b) * (p - side_c) <= 0:
+            return False, "It is impossible to create this triangle one of sides too long"
+        return True, "Validation successfully"
+
+
+    @staticmethod
+    def validate_fibonachi_tuple(data_tuple: tuple):
         """
         Validate tuple of parameters use Validator methods
         :param data_tuple: (min_value, max_value)
