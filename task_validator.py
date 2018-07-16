@@ -29,6 +29,21 @@ class TaskValidator:
                 return True, "Validation successful"
 
     @staticmethod
+    def validate_envelope_sides(a_side, b_side):
+        validation_a = Validator.single_validate({"value": a_side, "rules": (
+            "is_float", "not_null", "not_neg"
+        )})
+        validation_b = Validator.single_validate({"value": b_side, "rules": (
+            "is_float", "not_null", "not_neg"
+        )})
+        if not validation_a[0]:
+            return False, "First argument - height is invalid\n" + validation_a[1]
+        elif not validation_b[0]:
+            return False, "First argument - length is invalid\n" + validation_b[1]
+        else:
+            return True, "Validation successful"
+
+    @staticmethod
     def validate_fibonachi_tuple(data_tuple):
         """
         Validate tuple of parameters use Validator methods

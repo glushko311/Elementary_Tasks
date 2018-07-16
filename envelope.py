@@ -1,7 +1,8 @@
 from math import sin, cos, pi
 
 from exceptions.user_exit_error import UserExitError
-from validator import Validator
+
+from task_validator import TaskValidator
 
 
 class Envelope:
@@ -95,7 +96,7 @@ def input_envelope():
         a_side = input()
         print("Please input the second side")
         b_side = input()
-        validation_res = Validator.validate_two_float_not_null(a_side, b_side)
+        validation_res = TaskValidator.validate_envelope_sides(a_side, b_side)
         if validation_res[0]:
             return Envelope(float(a_side), float(b_side))
         print(validation_res[1])
