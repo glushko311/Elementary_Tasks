@@ -4,6 +4,31 @@ from validator import Validator
 class TaskValidator:
 
     @staticmethod
+    def validate_chess_board_tuple(data_tuple):
+        """
+        Validate tuple of parameters use Validator methods
+        :param data_tuple: (min_value, max_value)
+        :return: tuple: (bool, str)
+        """
+        if len(data_tuple[1]) != 2:
+            return False, "Start application with two number parameters!"
+        else:
+            height = data_tuple[1][0]
+            length = data_tuple[1][1]
+            validation_height = Validator.single_validate({"value": height, "rules": (
+                "is_int", "not_null", "not_neg"
+            )})
+            validation_length = Validator.single_validate({"value": length, "rules": (
+                "is_int", "not_null", "not_neg"
+            )})
+            if not validation_height[0]:
+                return False, "First argument - height is invalid\n" + validation_height[1]
+            elif not validation_length[0]:
+                return False, "First argument - length is invalid\n" + validation_length[1]
+            else:
+                return True, "Validation successful"
+
+    @staticmethod
     def validate_fibonachi_tuple(data_tuple):
         """
         Validate tuple of parameters use Validator methods

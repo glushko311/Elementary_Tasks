@@ -5,6 +5,11 @@ class Validator:
 
     @staticmethod
     def validate_is_not_null(value):
+        """
+        Validate parameter is it null
+        :param value:
+        :return:
+        """
         if float(value) == 0:
             return False, "Value is null.\n"
         else:
@@ -12,6 +17,11 @@ class Validator:
 
     @staticmethod
     def validate_is_not_negative(value):
+        """
+        Validate parameter is it negative
+        :param value:
+        :return:
+        """
         if float(value) < 0:
             return False, "Value is negative.\n"
         else:
@@ -19,6 +29,11 @@ class Validator:
 
     @staticmethod
     def validate_is_int(value):
+        """
+        Validate parameter is it can be convert into integer
+        :param value:
+        :return:
+        """
         if not value.isdigit():
             return False, "Value is not an integer number.\n"
         else:
@@ -26,6 +41,11 @@ class Validator:
 
     @staticmethod
     def validate_is_float(value):
+        """
+        Validate parameter is it can be convert into float
+        :param value:
+        :return:
+        """
         if not re.match(r'^\s*[-+]?\d*\.?\d*\s*$', value):
             return False, "Value is not a float number.\n"
         else:
@@ -33,6 +53,11 @@ class Validator:
 
     @staticmethod
     def validate_is_triangular_input(value):
+        """
+        Validate parameter is it can be convert into triangular use regular expressions
+        :param value:
+        :return:
+        """
         if not re.match(r'^\w+\s*,\s*\d*\.?\d*\s*,\s*\d*\.?\d*\s*,\s*\d*\.?\d*$', value):
             return False, "Incorrect triangular input data (should be \"name,side_a,side_b,side_c\")"
         else:

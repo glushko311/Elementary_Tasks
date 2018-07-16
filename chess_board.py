@@ -1,7 +1,9 @@
 from optparse import OptionParser
 
-from exceptions.chess_board_exception import ChessBoardException
-from validator import Validator
+from task_validator import TaskValidator
+
+# from exceptions.chess_board_exception import ChessBoardException
+# from validator import Validator
 
 
 class ChessBoard:
@@ -19,21 +21,6 @@ class ChessBoard:
              print_board()
              show_instructions()
     """
-
-    @staticmethod
-    def create_chessboard(args):
-        """
-        Send list of arguments to validator if ok - create ChessBoard object else ChessBoardException
-        """
-        if len(args) != 2:
-            raise ChessBoardException('Should be started with two parameters')
-        length = args[0]
-        height = args[1]
-        validation_res = Validator.validate_two_int_not_null(length, height)
-        if validation_res[0]:
-            return ChessBoard(int(length), int(height))
-        else:
-            raise ChessBoardException(validation_res[1])
 
     @staticmethod
     def show_instructions():
@@ -107,11 +94,12 @@ def start():
     parser = OptionParser()
     args = parser.parse_args()
 
-    try:
-        board = ChessBoard.create_chessboard(args[1])
+    validation_res = TaskValidator.validate_chess_board_tuple(args)
+    if validation_res[0]:
+        board = ChessBoard(int(args[1][0]), int(args[1][1]))
         board.print_board()
-    except ChessBoardException as e:
-        print(e)
+    else:
+        print(validation_res[1])
         ChessBoard.show_instructions()
 
 
