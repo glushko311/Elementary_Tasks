@@ -40,7 +40,7 @@ class TaskValidator:
         if not validation_a[0]:
             return False, "First argument - height is invalid\n" + validation_a[1]
         elif not validation_b[0]:
-            return False, "First argument - length is invalid\n" + validation_b[1]
+            return False, "Second argument - length is invalid\n" + validation_b[1]
         else:
             return True, "Validation successful"
 
@@ -122,8 +122,41 @@ class TaskValidator:
         return True, "Validation successful"
 
     @staticmethod
-    def validate_ticket_handler():
-        pass
+    def validate_ticket(ticket: str):
+        validation_res = Validator.single_validate({"value": ticket,
+                                                    "rules": ("is_int", "not_neg")})
+        if not validation_res[0]:
+            return False, validation_res[1]
+        if int(ticket) > 999999:
+            return False, "Ticket number is too large it should be less then 999999"
+        return True, "Validation successful"
+
+    @staticmethod
+    def validate_tickets_file(path: str):
+        valid_path_res = Validator.single_validate({"value": path, "rules": ("file_exists",)})
+        if not valid_path_res[0]:
+            return False, valid_path_res[1]
+        with open(path, "r") as f:
+            tickets = f.read()
+        for t in tickets.split(','):
+            if not t.isdigit() or len(t) != 6:
+                return False, "Invalid file data format!"
+        return True, "Validation successful"
+
+    @staticmethod
+    def validate_tickets_from_numbers(min_ticket: str, max_ticket: str):
+
+        for value in (min_ticket, max_ticket):
+            valid_res = Validator.single_validate({"value": value, "rules": (
+                                                    "is_int", "not_neg")})
+            if not valid_res[0]:
+                return False, "Input value - {0} invalid.\n{1}".format(value, valid_res[1])
+            if int(value) > 999999:
+                return False, "Input value - {0} invalid.\n{1}".format(value,
+                                                                       "Ticket number should be less then 999999")
+        if int(min_ticket) >= int(max_ticket):
+            return False, "First input value should be less then second"
+        return True, "Validation successful"
 
     @staticmethod
     def validate_sequence(data_list: list):
