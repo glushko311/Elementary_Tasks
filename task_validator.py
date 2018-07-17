@@ -120,3 +120,18 @@ class TaskValidator:
         if int(data_list[1][0]) < -((10 ** 102) - 1):
             return False, "Your input number is too small, it should be more then -10 ** 102 - 1"
         return True, "Validation successful"
+
+    @staticmethod
+    def validate_ticket_handler():
+        pass
+
+    @staticmethod
+    def validate_sequence(data_list: list):
+        if len(data_list[1]) != 1:
+            return False, "Start application with one number parameter!"
+        validation_res = Validator.single_validate({"value": data_list[1][0],
+                                                    "rules": ("is_int", "not_neg")})
+        if validation_res[0]:
+            return True, "Validation successful"
+        else:
+            return False, validation_res[1]

@@ -1,15 +1,12 @@
 from optparse import OptionParser
 
+from task_validator import TaskValidator
+
 
 class Sequence:
-
-    @staticmethod
-    def get_n_validate(args):
-        num = int(args[1][0])
-        if num < 0:
-            raise ValueError
-        return Sequence([str(i) for i in range(1, num**2) if i**2 < num])
-
+    """
+    Class to create save and print sequences
+    """
     def __init__(self, sequence):
         self.sequence = sequence
 
@@ -18,25 +15,20 @@ class Sequence:
 
     @staticmethod
     def start():
-        '''
+        """
         Start application function
         :return:
-        '''
+        """
         parser = OptionParser()
         args = parser.parse_args()
-        try:
-            sequence = Sequence.get_n_validate(args)
-        except IndexError:
-            print("Start application with single number parameter")
-            quit()
-
-        except ValueError:
-            print("Start application with single number parameter")
-            quit()
-
-        print(sequence)
-
-
+        validate_res = TaskValidator.validate_sequence(args)
+        if validate_res[0]:
+            num = int(args[1][0])
+            sequence = Sequence([str(i) for i in range(1, num**2) if i**2 < num])
+            print(sequence)
+        else:
+            print(validate_res[1])
+            
+        
 if __name__ == "__main__":
     Sequence.start()
-

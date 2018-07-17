@@ -29,13 +29,13 @@ class Validator:
             return True, "Validation successfully.\n"
 
     @staticmethod
-    def validate_is_int(value):
+    def validate_is_int(value:str):
         """
         Validate parameter is it can be convert into integer
         :param value:
         :return:
         """
-        if not value.isdigit():
+        if not re.match(r'^\s*[-+]?\d*\s*$', value):
             return False, "Value is not an integer number.\n"
         else:
             return True, "Validation successfully.\n"
@@ -63,18 +63,6 @@ class Validator:
             return True, "Validation successfully"
         else:
             return False, "File with path {0} not found!".format(value)
-    #
-    # @staticmethod
-    # def validate_is_triangular_input(value):
-    #     """
-    #     Validate parameter is it can be convert into triangular use regular expressions
-    #     :param value:
-    #     :return:
-    #     """
-    #     if not re.match(r'^\w+\s*,\s*\d*\.?\d*\s*,\s*\d*\.?\d*\s*,\s*\d*\.?\d*$', value):
-    #         return False, "Incorrect triangular input data (should be \"name,side_a,side_b,side_c\")"
-    #     else:
-    #         return True, "Validation successfully.\n"
 
     SHORT_CODES = {
         "not_null": "validate_is_not_null",
@@ -82,7 +70,6 @@ class Validator:
         "is_int": "validate_is_int",
         "is_float": "validate_is_float",
         "file_exists": "validate_file_exists"
-
     }
 
     @staticmethod
@@ -99,7 +86,7 @@ class Validator:
 
         return True, "Validation successfully"
 
-    @staticmethod
-    def validate_min_max_values_tuple(min_max_tuple):
-        if len(min_max_tuple) != 2:
-            return False, "Application need two parameters."
+    # @staticmethod
+    # def validate_min_max_values_tuple(min_max_tuple):
+    #     if len(min_max_tuple) != 2:
+    #         return False, "Application need two parameters."

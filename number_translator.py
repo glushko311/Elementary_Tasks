@@ -1,6 +1,7 @@
 from optparse import OptionParser
 
 from task_validator import TaskValidator
+from validator import Validator
 
 
 class NumberTranslator:
@@ -162,6 +163,7 @@ class NumberTranslator:
 
 
 def start():
+
     parser = OptionParser()
     args = parser.parse_args()
     validate_res = TaskValidator.validate_number_translation(args)
