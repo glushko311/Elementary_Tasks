@@ -2,9 +2,9 @@ from optparse import OptionParser
 
 
 class NumberTranslator:
-    '''
+    """
     Contain methods to translate number into text display
-    '''
+    """
     __DICT_NUMBERS = {
         '-': {'-': "минус"},
         0: {0: "ноль"},
@@ -48,12 +48,12 @@ class NumberTranslator:
         }
     }
 
-    def __from_1_to_99(self, num: int) -> str:
-        '''
+    def __from_1_to_99(self, num) -> str:
+        """
         translate numbers from 1 to 99 into text
         :param num:
         :return:
-        '''
+        """
         dict_numbers = self.__DICT_NUMBERS
         if num == 0:
             res_str = ""
@@ -66,27 +66,28 @@ class NumberTranslator:
         return res_str
 
     def __from_99_to_999(self, num: int) -> str:
-        '''
+        """
         Translate numbers from 99 to 999 into text
         :param num:
         :return:
-        '''
+        """
         dict_numbers = self.__DICT_NUMBERS
         if num <= 99:
             return self.__from_1_to_99(num)
         return dict_numbers[100][num // 100] + " " + self.__from_1_to_99(num % 100)
 
-    def __get_thousands(self, num: int) -> str:
-        '''
+    def __get_thousands(self, num) -> str:
+        """
         Translate numbers from 999 to 999 999 into text
         :param num:
         :return:
-        '''
+        """
         dict_numbers = self.__DICT_NUMBERS
         res_str = ""
         num_thousands = num // 1000
 
-        if (10 <= num_thousands) and (10 <= (int((str(num_thousands))[-2] + (str(num_thousands))[-1])) <= 19):
+        if (10 <= num_thousands) and (10 <= (int((str(num_thousands))[-2] +
+                                                 (str(num_thousands))[-1])) <= 19):
             # two_last_digits = int((str(num_thousands))[-2] + (str(num_thousands))[-1])
             thousand = self.__from_99_to_999(num_thousands) + " тысяч"
         else:
@@ -96,16 +97,15 @@ class NumberTranslator:
 
         thousand = thousand.replace("один ", "одна ")
         thousand = thousand.replace("два ", "две ")
-        res_str += thousand + " " + \
-                   self.__from_99_to_999(num % 1000)
+        res_str += thousand + " " + self.__from_99_to_999(num % 1000)
         return res_str
 
     def __number_handler(self, num: int) -> str:
-        '''
+        """
         Main converter from number into string
         :param num:
         :return:
-        '''
+        """
         dict_numbers = self.__DICT_NUMBERS
         if num > ((10 ** 102) - 1):
             print("Вы ввели слишком большое число!")
@@ -150,11 +150,11 @@ class NumberTranslator:
         return res_str
 
     def translate(self, num: int) -> str:
-        '''
+        """
         Check number by null and strip spaces in text appearence
         :param num:
         :return:
-        '''
+        """
         if num == 0:
             res_str = self.__DICT_NUMBERS[0][0]
         else:

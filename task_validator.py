@@ -1,3 +1,4 @@
+
 from validator import Validator
 
 
@@ -64,19 +65,31 @@ class TaskValidator:
             return False, "It is impossible to create this triangle one of sides too long"
         return True, "Validation successfully"
 
+    @staticmethod
+    def validate_file_handler(data_list: list):
+        if len(data_list[1]) > 0:
+            path = data_list[1][0]
+            valid_path_res = Validator.single_validate({"value": path, "rules": ("file_exists",)})
+            if valid_path_res[0]:
+                return True, "Validation successful"
+            else:
+                return False, valid_path_res[1]
+        else:
+            return False, "Application should be started with two or three parameters:\n" \
+                          " 1 - path to file, 2 - substring to find [, 3 - substring to replace]"
 
     @staticmethod
-    def validate_fibonachi_tuple(data_tuple: tuple):
+    def validate_fibonachi(data_list: list):
         """
         Validate tuple of parameters use Validator methods
-        :param data_tuple: (min_value, max_value)
+        :param data_list: (min_value, max_value)
         :return: tuple: (bool, str)
         """
-        if len(data_tuple[1]) != 2:
+        if len(data_list[1]) != 2:
             return False, "Start application with two number parameters!"
         else:
-            min_val = data_tuple[1][0]
-            max_val = data_tuple[1][1]
+            min_val = data_list[1][0]
+            max_val = data_list[1][1]
             validation_min = Validator.single_validate({"value": min_val, "rules": ("is_int", "not_neg")})
             validation_max = Validator.single_validate({"value": max_val, "rules": ("is_int", "not_neg")})
             if not validation_min[0]:
@@ -88,3 +101,7 @@ class TaskValidator:
                     return False, "First parameter(min_value) should be less than second(max_value)!"
                 else:
                     return True, "Validation successful"
+
+    @staticmethod
+    def validate_number_translation(data_list: list):
+        pass

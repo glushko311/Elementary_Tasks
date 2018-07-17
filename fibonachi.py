@@ -32,7 +32,7 @@ class Fibonachi:
         return fib
 
     @classmethod
-    def print_arr(cls, fib_arr: list) -> str:
+    def print_arr(cls, fib_arr: list):
         """
         Print list of fibonachi numbers
         :param fib_arr:
@@ -51,7 +51,7 @@ def start():
     parser = OptionParser()
     args = parser.parse_args()
 
-    validation_res = TaskValidator.validate_fibonachi_tuple(args)
+    validation_res = TaskValidator.validate_fibonachi(args)
     if validation_res[0]:
         fib_arr = Fibonachi.fib_in_interval(int(args[1][0]), int(args[1][1]))
         Fibonachi.print_arr(fib_arr)
