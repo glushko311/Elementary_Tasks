@@ -81,8 +81,8 @@ class TaskValidator:
     @staticmethod
     def validate_fibonachi(data_list: list):
         """
-        Validate tuple of parameters use Validator methods
-        :param data_list: (min_value, max_value)
+        Validate list of parameters use Validator methods
+        :param data_list: [[...],[min_value, max_value]]
         :return: tuple: (bool, str)
         """
         if len(data_list[1]) != 2:
@@ -104,4 +104,19 @@ class TaskValidator:
 
     @staticmethod
     def validate_number_translation(data_list: list):
-        pass
+        """
+        Validate parameter list for number_translator
+        :param data_list:
+        :return: tuple: (bool, str)
+        """
+        if len(data_list[1]) != 1:
+            return False, "Start application with one number parameter!"
+
+        validation_res = Validator.single_validate({"value": data_list[1][0], "rules": ("is_int",)})
+        if not validation_res[0]:
+            return False, validation_res[1]
+        if int(data_list[1][0]) > ((10 ** 102) - 1):
+            return False, "Your input number is too large, it should be less then 10 ** 102 - 1"
+        if int(data_list[1][0]) < -((10 ** 102) - 1):
+            return False, "Your input number is too small, it should be more then -10 ** 102 - 1"
+        return True, "Validation successful"

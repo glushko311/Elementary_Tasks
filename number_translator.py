@@ -1,5 +1,7 @@
 from optparse import OptionParser
 
+from task_validator import TaskValidator
+
 
 class NumberTranslator:
     """
@@ -107,9 +109,6 @@ class NumberTranslator:
         :return:
         """
         dict_numbers = self.__DICT_NUMBERS
-        if num > ((10 ** 102) - 1):
-            print("Вы ввели слишком большое число!")
-            quit()
         res_str = ""
         if num < 0:
             num = abs(num)
@@ -165,20 +164,11 @@ class NumberTranslator:
 def start():
     parser = OptionParser()
     args = parser.parse_args()
-
-    number = 0
-    try:
-        number = int(args[1][0])
-    except IndexError:
-        print("Введите параметр - число в интервале (-10**102 .. 10**102)")
-        quit()
-    except ValueError:
-        print("Введите параметр - число в интервале (-10**102 .. 10**102)")
-        quit()
-
-    number_translator = NumberTranslator()
-
-    print(number_translator.translate(number))
+    validate_res = TaskValidator.validate_number_translation(args)
+    if validate_res[0]:
+        print(NumberTranslator().translate(int(args[1][0])))
+    else:
+        print(validate_res[1])
 
 
 if __name__ == "__main__":
