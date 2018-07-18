@@ -17,7 +17,8 @@ class EnvelopeTestList(unittest.TestCase):
         try:
             self.assertEqual(act_res, exp_res)
         except AssertionError as e:
-            print("\nFail test - \"{0}\";\n Input data - {1}; Error{2}".format(name, (env1, env2), e))
+            msg ="\nFail test - \"{0}\";\n Input data - {1}; Error{2}".format(name, (env1, env2), e)
+            raise AssertionError(msg)
 
     @parameterized.expand([
         ["Calc_rotation_angle_for_other can_put", Envelope(5, 4), Envelope(5.1, 1.4), 6.872966141183958],
@@ -28,7 +29,8 @@ class EnvelopeTestList(unittest.TestCase):
         try:
             self.assertEqual(act_res, exp_res)
         except AssertionError as e:
-            print("\nFail test - \"{0}\";\n Input data - {1}; Error{2}".format(name, (env1, env2), e))
+            msg = "\nFail test - \"{0}\";\n Input data - {1}; Error{2}".format(name, (env1, env2), e)
+            raise AssertionError(msg)
 
 
 if __name__ == '__main__':

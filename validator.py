@@ -80,6 +80,7 @@ class Validator:
         """
         Validate one value validate_pack['value'] by rules from validate_pack['rules']
         validation_pack it is tuple with value and tuple of validation rules
+        {'value':value, 'rules':("is_int", "not_null")
         """
         for short_code in validate_pack['rules']:
             func = getattr(Validator, Validator.SHORT_CODES[short_code])
