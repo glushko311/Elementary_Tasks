@@ -102,14 +102,5 @@ class TaskValidatorTestList(unittest.TestCase):
             raise AssertionError(msg)
 
 
-
-    # def test_single_validate_not_ok(self):
-    #     act_res = Validator.single_validate({"value": '-4', "rules": (
-    #         "is_int", "not_null", "not_neg")})
-    #     exp_res = [False, "Value is negative.\n"]
-    #     self.assertEqual(act_res[0], exp_res[0])
-    #     self.assertEqual(act_res[1], exp_res[1])
-
-
 if __name__ == '__main__':
     unittest.main()
