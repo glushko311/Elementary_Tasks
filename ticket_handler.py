@@ -1,5 +1,3 @@
-from os.path import exists
-
 from ticket import Ticket
 from validator import Validator
 from task_validator import TaskValidator
@@ -96,7 +94,7 @@ class TicketHandler(object):
             validate_res = TaskValidator.validate_tickets_file(file_path)
             if validate_res[0]:
                 with open(file_path, "r") as f:
-                        tickets = f.read()
+                    tickets = f.read()
                 for t in tickets.split(','):
                     self.__tickets.append(Ticket(t))
                 print("Tickets loaded successfully!")
@@ -151,7 +149,7 @@ class TicketHandler(object):
         :param maximum_num:
         :return:
         """
-        for item in range(minimum_num, maximum_num+1):
+        for item in range(minimum_num, maximum_num + 1):
             str_item = str(item)
             if len(str_item) < 6:
                 str_item = '0' * (6 - len(str_item)) + str_item
@@ -177,20 +175,21 @@ class TicketHandler(object):
         print("Number of happy tickets by {0} method is equal - {1}".format(self.__algorithm, self.__count))
 
     def tickets_input(self):
-        def tickets_input():
-            """
-            Control input tickets and output instructions for user
-            for test 2 -from file mode use - 'data/tickets.txt' - file with tickets
-            """
+
+        """
+        Control input tickets and output instructions for user
+        for test 2 -from file mode use - 'data/tickets.txt' - file with tickets
+        """
+
         flag = True
         while flag:
             print(
-                  "Choose type of tickets input:\n"
-                  " [1] manual tickets input,\n"
-                  " [2] load tickets from file,\n"
-                  " [3] generate tickets between min and max values,\n"
-                  " [4] calculate maximum number of happy tickets,\n"
-                 )
+                "Choose type of tickets input:\n"
+                " [1] manual tickets input,\n"
+                " [2] load tickets from file,\n"
+                " [3] generate tickets between min and max values,\n"
+                " [4] calculate maximum number of happy tickets,\n"
+            )
             input_type = input()
             if input_type == '1':
                 self.input_tickets_manually()

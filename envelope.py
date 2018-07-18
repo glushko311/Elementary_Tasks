@@ -21,31 +21,6 @@ class Envelope:
     square() - getter for __square
     """
 
-    # @staticmethod
-    # def can_put_one_to_another_or_opposite(env1, env2):
-    #     '''
-    #     Calculate can you put one envelope to another
-    #     :param env1:
-    #     :param env2:
-    #     :return: (Envelope, Envelope, bool)
-    #     '''
-    #     is_in_flag = False
-    #     if env1.square < env2.square:
-    #         env1, env2 = env2, env1
-    #
-    #     if env1.max_side > env2.max_side and env1.min_side > env2.min_side:
-    #         is_in_flag = True
-    #     else:
-    #         phi = 0  # rotation angle for envelope2
-    #         accuracy = 0.001  # angle step
-    #         # Check - can put envelope2 into envelope1 if it is rotate to angle phi
-    #         while phi < (pi / 2):
-    #             if (env1.max_side >= (env2.max_side * sin(phi) + env2.min_side * cos(phi))) and\
-    #                     (env1.min_side >= env2.max_side * cos(phi) + env2.min_side * sin(phi)):
-    #                 is_in_flag = True
-    #             phi += accuracy
-    #     return env2, env1, is_in_flag
-
     def calc_rotation_angle_for_other(self, other):
         """
         Calculate the best rotation angle for other into self
@@ -75,6 +50,31 @@ class Envelope:
                 return True
             else:
                 return False
+
+    # @staticmethod
+    # def can_put_one_to_another_or_opposite(env1, env2):
+    #     '''
+    #     Calculate can you put one envelope to another
+    #     :param env1:
+    #     :param env2:
+    #     :return: (Envelope, Envelope, bool)
+    #     '''
+    #     is_in_flag = False
+    #     if env1.square < env2.square:
+    #         env1, env2 = env2, env1
+    #
+    #     if env1.max_side > env2.max_side and env1.min_side > env2.min_side:
+    #         is_in_flag = True
+    #     else:
+    #         phi = 0  # rotation angle for envelope2
+    #         accuracy = 0.001  # angle step
+    #         # Check - can put envelope2 into envelope1 if it is rotate to angle phi
+    #         while phi < (pi / 2):
+    #             if (env1.max_side >= (env2.max_side * sin(phi) + env2.min_side * cos(phi))) and\
+    #                     (env1.min_side >= env2.max_side * cos(phi) + env2.min_side * sin(phi)):
+    #                 is_in_flag = True
+    #             phi += accuracy
+    #     return env2, env1, is_in_flag
 
     def __init__(self, a_side: float, b_side: float):
         self.__max_side = max(a_side, b_side)

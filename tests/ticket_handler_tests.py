@@ -1,9 +1,8 @@
 import unittest
 
-from file_handler import FileHandler
-
 from ticket import Ticket
 from ticket_handler import TicketHandler
+
 
 class TicketHandlerTestSuit(unittest.TestCase):
 
@@ -61,4 +60,4 @@ class TicketHandlerTestSuit(unittest.TestCase):
 
 
 if __name__ == '__main__':
-        unittest.main()
+    unittest.main()

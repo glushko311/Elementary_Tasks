@@ -163,7 +163,6 @@ class NumberTranslator:
 
 
 def start():
-
     parser = OptionParser()
     args = parser.parse_args()
     validate_res = TaskValidator.validate_number_translation(args)

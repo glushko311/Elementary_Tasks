@@ -37,5 +37,6 @@ class FileHandlerTestSuit(unittest.TestCase):
         with self.assertRaises(FileNotFoundError):
             FileHandler.find_n_replace("not_found.txt", "kad", "mab")
 
+
 if __name__ == '__main__':
-        unittest.main()
+    unittest.main()

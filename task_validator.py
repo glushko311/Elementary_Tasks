@@ -97,9 +97,9 @@ class TaskValidator:
             if not validation_min[0]:
                 return False, "First argument - min_value is invalid\n" + validation_min[1]
             elif not validation_max[0]:
-                return False, "First argument - min_value is invalid\n" + validation_max[1]
+                return False, "Second argument - max_value is invalid\n" + validation_max[1]
             else:
-                if min_val > max_val:
+                if int(min_val) > int(max_val):
                     return False, "First parameter(min_value) should be less than second(max_value)!"
                 else:
                     return True, "Validation successful"

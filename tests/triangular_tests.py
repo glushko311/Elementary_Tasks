@@ -1,9 +1,7 @@
-
 import unittest
 # from unittest import mock
 
 from triangular import Triangular
-from exceptions.triangular_exception import TriangularException
 
 
 class TriangularTestSuit(unittest.TestCase):
@@ -12,7 +10,7 @@ class TriangularTestSuit(unittest.TestCase):
     #     res = Triangular.get_n_validate()
     #     self.assertEqual(res, Triangular(5, 6, 7, 14.7, 'name'))
 
-# Test triangular sort
+    # Test triangular sort
 
     def test_triangular_sort(self):
         triang1 = Triangular(3, 4, 5, 6, "name1")
@@ -29,4 +27,4 @@ class TriangularTestSuit(unittest.TestCase):
 
 
 if __name__ == '__main__':
-        unittest.main()
+    unittest.main()

@@ -2,6 +2,7 @@ import unittest
 
 from ticket import Ticket
 
+
 class TicketTestSuit(unittest.TestCase):
     def test_validate_valid(self):
         res = Ticket.validate('123325')
@@ -30,7 +31,6 @@ class TicketTestSuit(unittest.TestCase):
         mark = "Moscow"
         self.assertEqual(ticket.is_happy(mark), False)
 
-
     def test_is_happy_piter_true(self):
         ticket = Ticket('113322')
         mark = "Piterburg"
@@ -48,4 +48,4 @@ class TicketTestSuit(unittest.TestCase):
 
 
 if __name__ == '__main__':
-        unittest.main()
+    unittest.main()

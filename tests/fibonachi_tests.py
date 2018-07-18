@@ -19,5 +19,6 @@ class FibonachiTestList(unittest.TestCase):
         res = Fibonachi.fib_in_interval(6, 18)
         self.assertEqual(res, [8, 13])
 
+
 if __name__ == '__main__':
-        unittest.main()
+    unittest.main()

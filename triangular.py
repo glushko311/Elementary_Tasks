@@ -1,5 +1,6 @@
-
 from task_validator import TaskValidator
+
+
 # from exceptions.triangular_exception import TriangularException
 
 
@@ -14,8 +15,9 @@ class Triangular:
           sort_triangular_list(triangular_list) - Sort triangular
                             list by square field and return sorted
     """
+
     @staticmethod
-    def triangular_create(triang_str:str):
+    def triangular_create(triang_str: str):
         triang_list = triang_str.split(',')
         name = triang_list[0].strip()
         side_a = float(triang_list[1].strip())
