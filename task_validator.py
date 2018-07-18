@@ -3,19 +3,21 @@ from validator import Validator
 
 
 class TaskValidator:
-
+    """
+    Use to put not universal code for validation functional
+    """
     @staticmethod
-    def validate_chess_board_tuple(data_tuple: tuple):
+    def validate_chess_board_list(data_list: list):
         """
-        Validate tuple of parameters use Validator methods
-        :param data_tuple: (min_value, max_value)
+        Validate list of parameters use Validator methods
+        :param data_list:
         :return: tuple: (bool, str)
         """
-        if len(data_tuple[1]) != 2:
+        if len(data_list[1]) != 2:
             return False, "Start application with two number parameters!"
         else:
-            height = data_tuple[1][0]
-            length = data_tuple[1][1]
+            height = data_list[1][0]
+            length = data_list[1][1]
             validation_height = Validator.single_validate({"value": height, "rules": (
                 "is_int", "not_null", "not_neg"
             )})
@@ -25,7 +27,7 @@ class TaskValidator:
             if not validation_height[0]:
                 return False, "First argument - height is invalid\n" + validation_height[1]
             elif not validation_length[0]:
-                return False, "First argument - length is invalid\n" + validation_length[1]
+                return False, "Second argument - length is invalid\n" + validation_length[1]
             else:
                 return True, "Validation successful"
 
@@ -49,7 +51,7 @@ class TaskValidator:
         triang_list = triang_str.split(',')
         if len(triang_list) != 4:
             return False, "Invalid value, value format should be \"name,side_a,side_b,side_c\"."
-        if triang_list == "":
+        if triang_list[0] == "":
             return False, "Name shouldn't be blank."
         for side in triang_list[1:]:
             validate_res = Validator.single_validate({"value": side, "rules": (

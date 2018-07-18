@@ -94,7 +94,7 @@ def start():
     parser = OptionParser()
     args = parser.parse_args()
 
-    validation_res = TaskValidator.validate_chess_board_tuple(args)
+    validation_res = TaskValidator.validate_chess_board_list(args)
     if validation_res[0]:
         board = ChessBoard(int(args[1][0]), int(args[1][1]))
         board.print_board()
