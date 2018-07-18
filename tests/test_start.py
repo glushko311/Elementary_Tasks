@@ -9,6 +9,7 @@ from tests.sequence_tests import SequenceTestSuit
 from tests.ticket_tests import TicketTestSuit
 from tests.ticket_handler_tests import TicketHandlerTestSuit
 from tests.number_translator_tests import NumberTranslatorTestSuit
+from tests.validator_tests import ValidatorTestList
 
 
 if __name__ == '__main__':

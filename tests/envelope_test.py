@@ -1,92 +1,34 @@
 import unittest
-from unittest import mock
+from nose_parameterized import parameterized
 
 from envelope import Envelope
 
 
 class EnvelopeTestList(unittest.TestCase):
-    def test_not_into1(self):
-        env1 = Envelope(4, 4)
-        env2 = Envelope(1, 7)
-        res = Envelope.is_into(env1, env2)
-        self.assertEqual(res[0], env2)
-        self.assertEqual(res[1], env1)
-        self.assertEqual(res[2], False)
 
-    def test_not_into2(self):
-        env1 = Envelope(5, 4)
-        env2 = Envelope(5.3, 3)
-        res = Envelope.is_into(env1, env2)
-        self.assertEqual(res[0], env2)
-        self.assertEqual(res[1], env1)
-        self.assertEqual(res[2], False)
+    @parameterized.expand([
+        ["Cant put by square test", Envelope(4, 4), Envelope(1, 7), False],
+        ["Cant put by rotation test", Envelope(5, 4), Envelope(5.3, 3), False],
+        ["Can put by sides test", Envelope(4, 4), Envelope(2, 2), True],
+        ["Can put_by_rotation test", Envelope(5, 4), Envelope(5.1, 1), True],
+    ])
+    def test_can_put_other(self, name, env1, env2, exp_res):
+        act_res = env1.can_put_other(env2)
+        try:
+            self.assertEqual(act_res, exp_res)
+        except AssertionError as e:
+            print("\nFail test - \"{0}\";\n Input data - {1}; Error{2}".format(name, (env1, env2), e))
 
-    def test_is_into1(self):
-        env1 = Envelope(4, 4)
-        env2 = Envelope(2, 2)
-        res = Envelope.is_into(env1, env2)
-        self.assertEqual(res[0], env2)
-        self.assertEqual(res[1], env1)
-        self.assertEqual(res[2], True)
-
-    def test_is_into2(self):
-        env1 = Envelope(5, 4)
-        env2 = Envelope(5.1, 1)
-        res = Envelope.is_into(env1, env2)
-        self.assertEqual(res[0], env2)
-        self.assertEqual(res[1], env1)
-        self.assertEqual(res[2], True)
-
-    def test_is_into_reverce(self):
-        env1 = Envelope(5.1, 1)
-        env2 = Envelope(4, 5)
-        res = Envelope.is_into(env1, env2)
-        self.assertEqual(res[0], env1)
-        self.assertEqual(res[1], env2)
-        self.assertEqual(res[2], True)
-
-    def test_is_into1_reverce(self):
-        env1 = Envelope(4.9, 3.9)
-        env2 = Envelope(4, 5)
-        res = Envelope.is_into(env1, env2)
-        self.assertEqual(res[0], env1)
-        self.assertEqual(res[1], env2)
-        self.assertEqual(res[2], True)
-
-    @mock.patch('builtins.input', side_effect=['14', '13'])
-    def test_get_n_validate_int(self, input):
-        res = Envelope.get_n_validate()
-        self.assertEqual(res, Envelope(14, 13))
-
-    @mock.patch('builtins.input', side_effect=['2.6765', '4.787'])
-    def test_get_n_validate_float(self, input):
-        res = Envelope.get_n_validate()
-        self.assertEqual(res, Envelope(2.6765, 4.787))
-
-    @mock.patch('builtins.input', side_effect=['0', '0'])
-    def test_get_n_validate_null(self, input):
-        with self.assertRaises(ValueError):
-            Envelope.get_n_validate()
-
-    @mock.patch('builtins.input', side_effect=['a', 'b'])
-    def test_get_n_validate_string(self, input):
-        with self.assertRaises(ValueError):
-            Envelope.get_n_validate()
-
-    @mock.patch('builtins.input', side_effect=['-5', '5'])
-    def test_get_n_validate_negative(self, input):
-        with self.assertRaises(ValueError):
-            Envelope.get_n_validate()
-
-    @mock.patch('builtins.input', side_effect=['5', 'b'])
-    def test_get_n_validate_string2(self, input):
-        with self.assertRaises(ValueError):
-            Envelope.get_n_validate()
-
-    @mock.patch('builtins.input', side_effect=['5a', '4'])
-    def test_get_n_validate_string3(self, input):
-        with self.assertRaises(ValueError):
-            Envelope.get_n_validate()
+    @parameterized.expand([
+        ["Calc_rotation_angle_for_other can_put", Envelope(5, 4), Envelope(5.1, 1.4), 6.872966141183958],
+        ["Calc_rotation_angle_for_other can't put", Envelope(5, 4), Envelope(5.1, 1.5), 6.848897994081739],
+    ])
+    def test_calc_rotation_angle(self, name, env1, env2, exp_res):
+        act_res = env1.calc_rotation_angle_for_other(env2)
+        try:
+            self.assertEqual(act_res, exp_res)
+        except AssertionError as e:
+            print("\nFail test - \"{0}\";\n Input data - {1}; Error{2}".format(name, (env1, env2), e))
 
 
 if __name__ == '__main__':

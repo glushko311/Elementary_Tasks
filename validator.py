@@ -3,6 +3,9 @@ import os
 
 
 class Validator:
+    """
+    Universal validator you can use method single validate send there value and rules in list
+    """
 
     @staticmethod
     def validate_is_not_null(value):
@@ -29,7 +32,7 @@ class Validator:
             return True, "Validation successfully.\n"
 
     @staticmethod
-    def validate_is_int(value:str):
+    def validate_is_int(value: str):
         """
         Validate parameter is it can be convert into integer
         :param value:
@@ -85,8 +88,3 @@ class Validator:
                 return False, valid_res[1]
 
         return True, "Validation successfully"
-
-    # @staticmethod
-    # def validate_min_max_values_tuple(min_max_tuple):
-    #     if len(min_max_tuple) != 2:
-    #         return False, "Application need two parameters."

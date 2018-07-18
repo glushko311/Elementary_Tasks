@@ -5,6 +5,8 @@ use Python version 3.6 or higher
 
 
                     UNITTESTS
+To use unittests you need install parameterized
+pip install parameterized
 
 to start all unittests use:
 python -m  unittest tests/test_start.py
